@@ -1,7 +1,7 @@
 .square {
     display: flex;
-    width: 50px;
-    height: 50px;
+    width: 200px;
+    height: 200px;
     background-color: black;
     justify-content: center;
     align-items: center;

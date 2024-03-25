@@ -22,12 +22,13 @@ function addSquare() {
     while(squareIds.includes(square.id)) {
         square.id++
     }
-    let squareId = document.createTextNode(square.id)
     square.addEventListener('mouseover', function() {
-        this.appendChild(squareId)
+        let idText = document.createElement('span');
+        idText.textContent = this.id;
+        this.appendChild(idText);
     });
     square.addEventListener('mouseout', function() {
-        this.removeChild(squareId)
+        this.innerHTML = ''; // Clear the square's innerHTML, removing the ID text
     });
     square.addEventListener('click', function() {
         this.style.backgroundColor = getRandomColor()
@@ -35,25 +36,17 @@ function addSquare() {
     square.addEventListener('dblclick', function() {
         if(this.id % 2 == 0) {
             // Remove square after if even
-            for(let i = 0; i <= totalSquares; i++) {
-                if(this == allSquares[i]) {
-                    if(allSquares[i+1]) {
-                        row.removeChild(allSquares[i+1])
-                    } else {
-                        alert(`No square after square with id: ${this.id}`)
-                    }
-                }
+            if (this.nextElementSibling) {
+                this.nextElementSibling.remove();
+            } else {
+                alert(`No square after square with id: ${this.id}`)
             }
         } else {
             // Remove square before if odd
-            for(let i = 0; i <= totalSquares; i++) {
-                if(this == allSquares[i]) {
-                    if(allSquares[i-1]) {
-                        row.removeChild(allSquares[i-1])
-                    } else {
-                        alert(`No square before square with id: ${this.id}`)
-                    }
-                }
+            if (this.previousElementSibling) {
+                this.previousElementSibling.remove();
+            } else {
+                alert(`No square before square with id: ${this.id}`)
             }
         }
     });
